@@ -2,6 +2,7 @@ class Rectangle:
     """
     Class Rectangle represents rectangle, which has width and height.
     """
+
     width = 0.0
     height = 0.0
 
@@ -38,8 +39,8 @@ class Rectangle:
     def resize(self, new_width, new_height):
         """
         Resizes rectangle.
-        :param new_width:
-        :param new_height:
+        :param new_width: new width of rectangle.
+        :param new_height: new height of rectangle.
         :return: function returns resized rectangle
         """
         self.width = new_width
@@ -47,6 +48,7 @@ class Rectangle:
 
     def __str__(self) -> str:
         """
+        Represents rectangle.
         :return: function returns string representation of rectangle
         """
         return f'Rectangle(Width: {self.width}, Height: {self.height})'

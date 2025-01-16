@@ -3,6 +3,7 @@ import math
 
 def calculate_circle_area(radius: float) -> float:
     """
+    Function to calculate the area of a circle
     :param radius: Radius of circle
     :return:  function is calculating the area of a circle
     """
