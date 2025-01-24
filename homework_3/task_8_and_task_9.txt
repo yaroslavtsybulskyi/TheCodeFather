@@ -1,0 +1,16 @@
+Task 8:
+Class Price could be used for the PaymentGateway implementation because:
+ - it provides possibility to add/subtract prices safely
+ - it has comparison operators
+ - it has possibility of conversion to another currency
+ - it has automatic rounding during the creation of price
+
+
+Task 9:
+Conclusion:
+For simple tasks, like validation, getters/setters or properties are preferrable.
+In case we are talking about some more serious logic - then descriptors should be used.
+For obligatory part of the task properties are more preferrable because of simple functionality, readability,
+and more pythonic code.
+For extra part: since the logic becomes complicated and validation is based on different attributes -
+then descriptors are better fit.
