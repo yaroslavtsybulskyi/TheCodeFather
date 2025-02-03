@@ -3,8 +3,10 @@ import csv
 
 def get_average_from_file(filename: str) -> None:
     """
-    Get average value from csv file.
-    :param filename: the name of the file to get average value from.
+    Calculate and print the average grade from a CSV file.
+    :param filename: The name of the CSV file containing student grades.
+    :raises FileNotFoundError: If the file does not exist.
+    :raises Exception: For any other errors that occur during processing.
     """
     try:
         with open(filename, 'r', encoding='utf-8') as csv_file:
@@ -26,11 +28,12 @@ def get_average_from_file(filename: str) -> None:
 
 def add_new_student_to_file(filename: str, name: str, age: int, grade: int) -> None:
     """
-    Add new student to csv file.
-    :param filename: the name of the file to add student to.
-    :param name: name of the student.
-    :param age: age of the student.
-    :param grade: grade of the student.
+    Add a new student with name, age, and grade to a CSV file.
+    :param filename: The name of the CSV file to add the student to.
+    :param name: The name of the student.
+    :param age: The age of the student.
+    :param grade: The grade of the student.
+    :raises Exception: For any errors that occur during file handling.
     """
     try:
         with open(filename, 'a', newline='', encoding='utf-8') as csv_file:

@@ -1,14 +1,18 @@
 import json
+from typing import List, Dict
 
 
-def load_books(filename: str):
+def load_books(filename: str) -> List[Dict]:
     """
-    The function loads books from a json file
-    :param filename: the name of the json file
+    Load books from a JSON file.
+    :param filename: The name of the JSON file to load the books from.
+    :return: A list of books (as dictionaries).
+    :raises FileNotFoundError: If the file is not found.
+    :raises JSONDecodeError: If the file cannot be decoded.
     """
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            books = json.load(f)
+        with open(filename, 'r', encoding='utf-8') as file:
+            books = json.load(file)
             return books
     except FileNotFoundError:
         print(f'File {filename} not found.')
@@ -20,8 +24,8 @@ def load_books(filename: str):
 
 def get_available_books_only(filename: str) -> None:
     """
-    The function gets all books available on a json file
-    :param filename: the filename of the json file
+    Prints all available books from a JSON file.
+    :param filename: The name of the JSON file to load books from.
     """
     books = load_books(filename)
     if not books:
@@ -35,24 +39,24 @@ def get_available_books_only(filename: str) -> None:
         print(f"{book['title']} by {book['author']}")
 
 
-def save_book(filename: str, data: list) -> None:
+def save_book(filename: str, data: List[Dict]) -> None:
     """
-    The function saves a book into a json file
-    :param filename: the name of the json file to save the value
-    :param data: the book value to save
+    Save a list of books to a JSON file.
+    :param filename: The name of the JSON file to save the books to.
+    :param data: The list of books to save.
     """
     try:
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+        with open(filename, 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
     except Exception as e:
         print(f'Error: {e}')
 
 
-def add_book(filename: str, book: dict) -> None:
+def add_book(filename: str, book: Dict) -> None:
     """
-    The function adds a book into a json file
-    :param filename: the name of the json file to save the value
-    :param book: the book value to save
+    Add a book to a JSON file.
+    :param filename: The name of the JSON file to save the book into.
+    :param book: The book (as a dictionary) to add to the file.
     """
     books = load_books(filename)
     books.append(book)

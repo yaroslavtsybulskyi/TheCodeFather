@@ -3,8 +3,10 @@ from xml.etree import ElementTree as ET
 
 def get_product_data(filename: str) -> None:
     """
-    Gets product data from xml file
-    :param filename: the filename of the xml file
+    Retrieves product data from an XML file and prints it.
+    :param filename: The name of the XML file containing product data.
+    :raises FileNotFoundError: If the file is not found.
+    :raises Exception: For any other errors that occur during processing.
     """
     try:
         tree = ET.parse(filename)
@@ -22,10 +24,11 @@ def get_product_data(filename: str) -> None:
 
 def update_product_quantity(filename: str, product_name: str, quantity: int) -> None:
     """
-    Updates quantity of specified product in xml file
-    :param filename: the filename of the xml file
-    :param product_name: the name of the product to update
-    :param quantity: new quantity of product
+    Updates the quantity of a specified product in an XML file.
+    :param filename: The name of the XML file to update.
+    :param product_name: The name of the product to update.
+    :param quantity: The new quantity of the product.
+    :raises Exception: For any errors that occur during processing.
     """
     try:
         tree = ET.parse(filename)
