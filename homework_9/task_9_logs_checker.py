@@ -38,4 +38,4 @@ def check_logs(filepath: str) -> None:
 
 
 if __name__ == "__main__":
-    check_logs('task_9_test.txt')
+    check_logs('task_9_log.log')
