@@ -5,9 +5,13 @@ This module implements a multi-threaded HTTP client that sends multiple
 requests to a web server concurrently using Python's `threading` module.
 """
 
+import logging
 import threading
 import time
 import requests
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 def send_request(thread_id: int) -> None:
@@ -24,9 +28,10 @@ def send_request(thread_id: int) -> None:
 
     try:
         response = requests.get(url)
-        print(f"Thread {thread_id}: {response.text}")
+        logging.info(f"Thread {thread_id}: {response.text}")
     except Exception as e:
-        print(f"Error: {e}")
+        logging.error(f"Error: {e}")
+        return None
 
     time.sleep(2)
 
@@ -51,7 +56,7 @@ def send_multiple_request(number_of_requests: int = 5) -> None:
         for thread in threads:
             thread.join()
     except Exception as e:
-        print(f"Error: {e}")
+        logging.error(f"Error: {e}")
 
 
 if __name__ == "__main__":

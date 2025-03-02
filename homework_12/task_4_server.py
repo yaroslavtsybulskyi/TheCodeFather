@@ -1,11 +1,15 @@
 """
 Module: threaded_http_server
 ----------------------------
-This module implements a simple multi-threaded HTTP server using Python's built-in
+This module implements a simple multithreaded HTTP server using Python's built-in
 `http.server` module with `ThreadingHTTPServer`.
 """
 
+import logging
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 class MyServer(BaseHTTPRequestHandler):
@@ -33,7 +37,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 def run_server(host: str = "localhost", port: int = 8080) -> None:
     """
-    Starts a multi-threaded HTTP server.
+    Starts multithreaded HTTP server.
     :param host: The hostname or IP address to bind to. Default is "localhost".
     :param port: The port number to listen on. Default is 8080.
     :return: None
@@ -47,7 +51,7 @@ def run_server(host: str = "localhost", port: int = 8080) -> None:
 
     server_address = (host, port)
     httpd = ThreadingHTTPServer(server_address, MyServer)
-    print(f"MyServer is running on http://{server_address[0]}:{server_address[1]}/")
+    logging.info(f"MyServer is running on http://{server_address[0]}:{server_address[1]}/")
     httpd.serve_forever()
 
 

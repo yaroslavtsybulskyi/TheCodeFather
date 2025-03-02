@@ -9,7 +9,11 @@ New offspring are added to the population under specific conditions.
 
 import threading
 import random
+import logging
 from typing import List, Optional
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 class Organism:
@@ -88,19 +92,19 @@ def evolution(organism: Organism, population: List[Organism],
         raise TypeError('Population list must be an instance of list.')
     if not isinstance(population_lock, threading.Lock):
         raise TypeError('Population lock must be an instance of threading.Lock.')
-    print(f"{organism.name} (Health: {organism.health} Food: {organism.food})")
+    logging.info(f"{organism.name} (Health: {organism.health} Food: {organism.food})")
 
     organism.eat()
     offspring = organism.reproduce()
 
     if not organism.update_health():
-        print(f"Say bye to {organism.name}")
+        logging.info(f"Say bye to {organism.name}")
         with population_lock:
             population.remove(organism)
         return
 
     if offspring:
-        print(f"New offspring of {organism.name}")
+        logging.info(f"New offspring of {organism.name}")
         with population_lock:
             population.append(offspring)
 
@@ -116,7 +120,7 @@ def main() -> None:
     population = [Organism("Tiger"), Organism("Bat"), Organism("Lion")]
 
     for generation in range(5):
-        print(f"\nGeneration {generation + 1}")
+        logging.info(f"\nGeneration {generation + 1}")
 
         threads = []
         for organism in list(population):
@@ -128,12 +132,12 @@ def main() -> None:
             thread.join()
 
         if not population:
-            print("All organisms have died. Evolution ends.")
+            logging.info("All organisms have died. Evolution ends.")
             return
 
-    print("\nFinal population:")
+    logging.info("\nFinal population:")
     for organism in population:
-        print(f"{organism.name} (Health: {organism.health}, Food: {organism.food})")
+        logging.info(f"{organism.name} (Health: {organism.health}, Food: {organism.food})")
 
 
 if __name__ == "__main__":

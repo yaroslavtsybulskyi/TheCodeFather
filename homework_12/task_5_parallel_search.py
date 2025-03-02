@@ -6,8 +6,12 @@ text across multiple large files concurrently using the `threading` module.
 """
 
 import threading
+import logging
 
 from typing import List
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 def search_in_file(search_text: str, file_name: str) -> None:
@@ -33,20 +37,20 @@ def search_in_file(search_text: str, file_name: str) -> None:
             lines = file.readlines()
 
             if not lines:
-                print(f"{file_name} is empty")
+                logging.warning(f"{file_name} is empty")
                 return
 
             for line_number, line in enumerate(lines, start=1):
                 if search_text_lowercased in line.lower().strip():
-                    print(f"{search_text} found in {file_name}: line {line_number} ")
+                    logging.info(f"{search_text} found in {file_name}: line {line_number} ")
                     match_count += 1
 
             if match_count == 0:
-                print(f"No matches found for {search_text} in {file_name}")
+                logging.info(f"No matches found for {search_text} in {file_name}")
             else:
-                print(f"Found {match_count} matches for {search_text} in {file_name}")
+                logging.info(f"Found {match_count} matches for {search_text} in {file_name}")
     except FileNotFoundError:
-        print(f"{file_name}: file not found")
+        logging.error(f"{file_name}: file not found")
 
 
 def parallel_search(search_text: str, file_list: List[str]) -> None:

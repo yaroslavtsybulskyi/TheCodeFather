@@ -8,6 +8,7 @@ and processes them in parallel.
 
 import multiprocessing
 import math
+import logging
 
 
 def partial_factorial(start: int, end: int) -> int:
@@ -52,7 +53,7 @@ def parallel_factorial(number: int, number_of_processes: int = 4) -> int:
         pool.join()
         return math.prod(results)
     except Exception as e:
-        print(f"Error: {e}")
+        logging.error(f"Error: {e}")
 
 
 if __name__ == "__main__":

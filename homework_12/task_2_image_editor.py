@@ -7,8 +7,12 @@ It resizes images to 200x200 pixels in parallel using the `concurrent.futures` m
 
 import concurrent.futures
 import os
+import logging
 
 from PIL import Image, UnidentifiedImageError
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 def image_editor(image_path: str) -> None:
@@ -24,17 +28,20 @@ def image_editor(image_path: str) -> None:
         raise TypeError("image_path must be a string")
 
     if not os.path.isfile(image_path):
-        print(f"Error: Folder '{image_path}' not found.")
+        logging.error(f"Error: File '{image_path}' not found.")
+        return
 
     try:
         image = Image.open(image_path)
         image = image.resize((200, 200))
         image.save(image_path)
-        print(f"Image {image_path} resized")
+        logging.info(f"Image {image_path} resized successfully")
     except FileNotFoundError:
-        print(f"File not found: {image_path}")
+        logging.error(f"File not found: {image_path}")
     except UnidentifiedImageError:
-        print(f"Unsupported image: {image_path}")
+        logging.error(f"Unsupported image format: {image_path}")
+    except Exception:
+        logging.error(f"Unexpected error processing {image_path}: {e}")
 
 
 def parallel_processor(folder_name: str) -> None:
@@ -49,14 +56,14 @@ def parallel_processor(folder_name: str) -> None:
         raise TypeError("folder_name must be a string")
 
     if not os.path.exists(folder_name):
-        print(f"Error: Folder '{folder_name}' not found.")
+        logging.error(f"Error: Folder '{folder_name}' not found.")
         return
 
     extensions = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
     images = [file for file in os.listdir(folder_name) if file.lower().endswith(extensions)]
 
     if len(images) == 0:
-        print(f"No images found in '{folder_name}'")
+        logging.warning(f"No images found in '{folder_name}'")
         return
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -65,7 +72,7 @@ def parallel_processor(folder_name: str) -> None:
             try:
                 future.result()
             except Exception as e:
-                print(f"Error occured: {e}")
+                logging.error(f"Error occurred while processing '{futures[future]}': {e}")
 
 
 if __name__ == "__main__":
