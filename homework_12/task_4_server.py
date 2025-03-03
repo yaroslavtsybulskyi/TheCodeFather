@@ -51,7 +51,7 @@ def run_server(host: str = "localhost", port: int = 8080) -> None:
 
     server_address = (host, port)
     httpd = ThreadingHTTPServer(server_address, MyServer)
-    logging.info(f"MyServer is running on http://{server_address[0]}:{server_address[1]}/")
+    print(f"MyServer is running on http://{server_address[0]}:{server_address[1]}/")
     httpd.serve_forever()
 
 

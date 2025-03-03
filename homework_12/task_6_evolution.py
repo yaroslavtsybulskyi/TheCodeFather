@@ -90,21 +90,20 @@ def evolution(organism: Organism, population: List[Organism],
         raise TypeError('Organism must be an instance of Organism.')
     if not isinstance(population, list):
         raise TypeError('Population list must be an instance of list.')
-    if not isinstance(population_lock, threading.Lock):
-        raise TypeError('Population lock must be an instance of threading.Lock.')
-    logging.info(f"{organism.name} (Health: {organism.health} Food: {organism.food})")
+
+    logging.info("%s (Health: %s Food: %s)", organism.name, organism.health, organism.food)
 
     organism.eat()
     offspring = organism.reproduce()
 
     if not organism.update_health():
-        logging.info(f"Say bye to {organism.name}")
+        logging.info("Say bye to %s", organism.name)
         with population_lock:
             population.remove(organism)
         return
 
     if offspring:
-        logging.info(f"New offspring of {organism.name}")
+        logging.info("New offspring of %s", organism.name)
         with population_lock:
             population.append(offspring)
 
@@ -120,11 +119,12 @@ def main() -> None:
     population = [Organism("Tiger"), Organism("Bat"), Organism("Lion")]
 
     for generation in range(5):
-        logging.info(f"\nGeneration {generation + 1}")
+        print(f"\nGeneration {generation + 1}")
 
         threads = []
         for organism in list(population):
-            thread = threading.Thread(target=evolution, args=(organism, population, population_lock))
+            thread = threading.Thread(target=evolution,
+                                      args=(organism, population, population_lock))
             threads.append(thread)
             thread.start()
 
@@ -135,9 +135,9 @@ def main() -> None:
             logging.info("All organisms have died. Evolution ends.")
             return
 
-    logging.info("\nFinal population:")
+    print("\nFinal population:")
     for organism in population:
-        logging.info(f"{organism.name} (Health: {organism.health}, Food: {organism.food})")
+        print(f"{organism.name} (Health: {organism.health}, Food: {organism.food})")
 
 
 if __name__ == "__main__":

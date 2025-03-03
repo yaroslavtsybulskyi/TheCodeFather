@@ -53,7 +53,8 @@ def parallel_factorial(number: int, number_of_processes: int = 4) -> int:
         pool.join()
         return math.prod(results)
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error("Error: %s", e)
+        return 0
 
 
 if __name__ == "__main__":

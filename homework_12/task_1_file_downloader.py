@@ -83,13 +83,13 @@ def download_file(url: str) -> None:
                             progress = (downloaded / total_size) * 100
                             print(f'Downloaded {progress:.2f}% of {filename}')
 
-                logging.info(f'{filename} successfully downloaded')
+                logging.info('%s successfully downloaded', filename)
                 return
         except OSError as e:
-            logging.error(f'Error creating {filename}: {e}')
+            logging.error('Error creating %s: %s', filename, e)
 
     except requests.exceptions.RequestException as e:
-        logging.error(f"Download error: {e} - {url} ")
+        logging.error("Download error: %s - %s", e, url)
 
 
 def parallel_downloader(urls: List[str], max_workers: int = 5) -> None:
@@ -113,7 +113,7 @@ def parallel_downloader(urls: List[str], max_workers: int = 5) -> None:
             try:
                 future.result()
             except Exception as e:
-                logging.error(f'An error occurred: {e}')
+                logging.error('An error occurred: %s', e)
 
 
 if __name__ == '__main__':

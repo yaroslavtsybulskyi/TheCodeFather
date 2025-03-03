@@ -52,7 +52,7 @@ def multi_sum(numbers_list: List[Union[int, float]], number_of_processes: int = 
         with mp.Pool(number_of_processes) as pool:
             temp_result = pool.map(chunk_sum, chunks)
     except Exception as e:
-        logging.error(f"Multiprocessing error: {e}")
+        logging.error("Multiprocessing error: %s", e)
         return None
 
     return sum(temp_result)

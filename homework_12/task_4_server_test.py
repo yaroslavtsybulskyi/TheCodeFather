@@ -1,7 +1,7 @@
 """
 Module: multi_threaded_http_client
 ----------------------------------
-This module implements a multi-threaded HTTP client that sends multiple
+This module implements a multithreaded HTTP client that sends multiple
 requests to a web server concurrently using Python's `threading` module.
 """
 
@@ -28,9 +28,9 @@ def send_request(thread_id: int) -> None:
 
     try:
         response = requests.get(url)
-        logging.info(f"Thread {thread_id}: {response.text}")
+        print(f"Thread {thread_id}: {response.text}")
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error("Error: %s", e)
         return None
 
     time.sleep(2)
@@ -56,7 +56,7 @@ def send_multiple_request(number_of_requests: int = 5) -> None:
         for thread in threads:
             thread.join()
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error("Error: %s", e)
 
 
 if __name__ == "__main__":
