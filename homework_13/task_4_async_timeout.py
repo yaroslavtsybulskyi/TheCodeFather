@@ -22,7 +22,7 @@ async def slow_task() -> None:
     print('The task was completed')
 
 
-async def main():
+async def main() -> None:
     """
     Runs the slow_task() with a timeout of 5 seconds.
 
@@ -33,6 +33,7 @@ async def main():
         await asyncio.wait_for(slow_task(), timeout=5)
     except asyncio.TimeoutError:
         logging.error('Timeout! The task was not completed in time')
+        return
 
 
 if __name__ == '__main__':

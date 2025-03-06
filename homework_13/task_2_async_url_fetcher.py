@@ -7,8 +7,11 @@ of multiple web pages using `aiohttp` and `asyncio`.
 
 import asyncio
 import aiohttp
+import logging
 
 from typing import List
+
+logging.basicConfig(level=logging.INFO)
 
 
 async def fetch_content(url: str) -> str:
@@ -17,9 +20,6 @@ async def fetch_content(url: str) -> str:
     :param url: The URL of the page to fetch.
     :return: The HTML content of the page as a string or an error message.
     :raises TypeError: If `url` is not a string.
-    :raises aiohttp.ClientError: If a network-related error occurs.
-    :raises asyncio.TimeoutError: If the request times out.
-    :raises Exception: For unexpected errors.
     """
     if not isinstance(url, str):
         raise TypeError('url must be a string')
@@ -30,10 +30,13 @@ async def fetch_content(url: str) -> str:
                 response.raise_for_status()
                 return await response.text()
     except aiohttp.ClientError as e:
+        logging.error("Error while fetching %s: %s", url, e)
         return f"Request failed for {url}: {e}"
     except asyncio.TimeoutError as e:
+        logging.error("Timeout error while fetching %s: %s", url, e)
         return f"Request timed out for {url}: {e}"
     except Exception as e:
+        logging.error("Unexpected error while fetching %s: %s", url, e)
         return f"Unexpected error for {url}: {e}"
 
 
